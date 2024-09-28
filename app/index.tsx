@@ -1,7 +1,9 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 const HomePage = () => (
-  <Text className="text-white bg-neutral-900">Test Page</Text>
+  <View className="bg-neutral-900 aspect-square w-24">
+    <Text className="text-white">Testttt Page</Text>
+  </View>
 );
 
 export default HomePage;
