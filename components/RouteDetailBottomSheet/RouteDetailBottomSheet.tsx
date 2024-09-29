@@ -7,8 +7,18 @@ import {
 } from "@gorhom/bottom-sheet";
 import Feather from "@expo/vector-icons/Feather";
 import colors from "tailwindcss/colors";
+import { formatDistance } from "./utils/formatDistance";
+import { formatDuration } from "./utils/formatDuration";
 
-const RouteDetailBottomSheet = () => {
+interface RouteDetailBottomSheetProps {
+  distance: number;
+  duration: number;
+}
+
+const RouteDetailBottomSheet = ({
+  distance,
+  duration,
+}: RouteDetailBottomSheetProps) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
@@ -35,7 +45,7 @@ const RouteDetailBottomSheet = () => {
                   km
                 </Text>
                 <Text className="text-3xl font-bold text-emerald-500">
-                  13,9
+                  {formatDistance(distance)}
                 </Text>
               </View>
               <View className="flex-col items-center justify-center w-1/3">
@@ -43,7 +53,7 @@ const RouteDetailBottomSheet = () => {
                   h
                 </Text>
                 <Text className="text-3xl font-bold text-emerald-500">
-                  0:30
+                  {formatDuration(duration)}
                 </Text>
               </View>
               <View className="flex-col items-center justify-center w-1/3 border-l-2 border-neutral-300">

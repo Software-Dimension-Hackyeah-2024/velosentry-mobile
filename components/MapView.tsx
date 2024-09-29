@@ -1,6 +1,6 @@
 import { CURRENT_LOCALIZATION } from "@/consts/currentLocalization";
 import { useSearchStore } from "@/store/searchStorage";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import RNMMapView, { Marker, Polyline, Region } from "react-native-maps";
 
@@ -21,11 +21,22 @@ const MapView = ({
   const initialRegion = getInitialRegion();
   const [region, setRegion] = useState<Region>(initialRegion);
   const { startLocationSearch, endLocationSearch } = useSearchStore();
+
+  // useEffect(() => {
+  //   setRegion({
+  //     latitude: startLocationSearch.lat,
+  //     longitude: startLocationSearch.lng,
+  //     latitudeDelta: 0.01,
+  //     longitudeDelta: 0.01,
+  //   });
+  // }, [startLocationSearch]);
+
   return (
     <RNMMapView
       onRegionChange={(reg) => {
         setRegion(reg);
       }}
+      region={region}
       initialRegion={initialRegion}
       style={{ ...StyleSheet.absoluteFillObject }}
     >
