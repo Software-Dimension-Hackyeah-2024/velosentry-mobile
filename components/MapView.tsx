@@ -1,6 +1,7 @@
+import { useSearchStore } from "@/store/searchStorage";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import RNMMapView, { Polyline, Region } from "react-native-maps";
+import RNMMapView, { Marker, Polyline, Region } from "react-native-maps";
 
 const getInitialRegion = () => {
   return {
@@ -18,6 +19,7 @@ const MapView = ({
 }) => {
   const initialRegion = getInitialRegion();
   const [region, setRegion] = useState<Region>(initialRegion);
+  const { startLocationSearch, endLocationSearch } = useSearchStore();
   return (
     <RNMMapView
       onRegionChange={(reg) => {
@@ -37,6 +39,24 @@ const MapView = ({
         strokeColors={["#7F0000"]}
         strokeWidth={6}
       />
+      {endLocationSearch && (
+        <>
+          <Marker
+            coordinate={{
+              latitude: startLocationSearch.lat,
+              longitude: startLocationSearch.lng,
+            }}
+            pinColor="red"
+          />
+          <Marker
+            coordinate={{
+              latitude: endLocationSearch.lat,
+              longitude: endLocationSearch.lng,
+            }}
+            pinColor="green"
+          />
+        </>
+      )}
     </RNMMapView>
   );
 };
