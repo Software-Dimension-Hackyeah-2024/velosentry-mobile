@@ -10,6 +10,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Feather from "@expo/vector-icons/Feather";
 import SearchTextInputContainer from "./SearchTextInputContainer";
 import SearchTextInputLeftIcon from "./SearchTextInputLeftIcon";
+import SearchTextInputRightIcon from "./SearchTextInputRightIcon";
 
 interface SearchTextInputProps {
   initialValue?: string;
@@ -18,6 +19,7 @@ interface SearchTextInputProps {
   onPress?: () => void;
   onLeftIconPress?: () => void;
   leftIcon?: ReactElement;
+  rightIcon?: ReactElement;
 }
 
 const SearchTextInput = forwardRef<TextInput, SearchTextInputProps>(
@@ -26,6 +28,7 @@ const SearchTextInput = forwardRef<TextInput, SearchTextInputProps>(
       onChange,
       onPress,
       leftIcon,
+      rightIcon,
       onLeftIconPress,
       initialValue,
       onInputClear,
@@ -61,12 +64,12 @@ const SearchTextInput = forwardRef<TextInput, SearchTextInputProps>(
           onPress={onPress}
           editable={onPress === undefined}
         />
-        <TouchableOpacity
-          className="aspect-square h-full items-center justify-center"
-          onPress={clearInput}
-        >
-          {value !== "" && <Feather name="x" size={24} color="black" />}
-        </TouchableOpacity>
+        {value !== "" && (
+          <SearchTextInputRightIcon
+            rightIcon={rightIcon}
+            onPress={rightIcon ? undefined : clearInput}
+          />
+        )}
       </SearchTextInputContainer>
     );
   }

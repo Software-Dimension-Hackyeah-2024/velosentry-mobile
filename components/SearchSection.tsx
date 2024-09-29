@@ -26,6 +26,7 @@ const SearchSection = () => {
           leftIcon={
             <MaterialIcons name="location-pin" size={24} color="black" />
           }
+          rightIcon={<MaterialIcons name="edit" size={24} color="black" />}
         />
       )}
       <SearchTextInput

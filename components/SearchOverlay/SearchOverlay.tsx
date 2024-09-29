@@ -8,7 +8,7 @@ import SuggestionRow, { SuggestionRowProps } from "./SuggestionRow";
 import { MOCK_GEO_RESPONSE } from "@/consts/mockGeoResponse";
 import { LocationCategory } from "@/types";
 import { CURRENT_LOCALIZATION } from "@/consts/currentLocalization";
-import { API_KEY } from "@env";
+const API_KEY = "01670b02e6d649b3b68bb955de2b022f";
 
 const SearchOverlay = () => {
   const {
@@ -54,10 +54,16 @@ const SearchOverlay = () => {
     }
   };
 
+  const initialValue = getSearchInputInitialValue();
+
   useEffect(() => {
     if (isSearchOverlayOpen) searchInputRef.current?.focus();
     if (!isSearchOverlayOpen) setClickedSearchInputVariant(undefined);
   }, [isSearchOverlayOpen]);
+
+  useEffect(() => {
+    handleInputChange(initialValue?.title ?? "");
+  }, []);
 
   return (
     <View className="h-screen w-screen bg-white items-center py-2">
@@ -68,7 +74,7 @@ const SearchOverlay = () => {
         }}
         onChange={handleInputChange}
         ref={searchInputRef}
-        initialValue={getSearchInputInitialValue()?.title}
+        initialValue={initialValue?.title}
       />
       {clickedSearchInputVariant === "startLocation" && (
         <SuggestionRow
