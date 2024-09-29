@@ -1,8 +1,11 @@
 import { CURRENT_LOCALIZATION } from "@/consts/currentLocalization";
 import { useSearchStore } from "@/store/searchStorage";
-import React, { useEffect, useState } from "react";
+import Feather from "@expo/vector-icons/Feather";
+import React, { useEffect, useMemo, useState } from "react";
 import { StyleSheet } from "react-native";
 import RNMMapView, { Marker, Polyline, Region } from "react-native-maps";
+import colors from "tailwindcss/colors";
+import DangerousIntersectionMarker from "./DangerousIntersectionMarker";
 
 const getInitialRegion = () => {
   return {
@@ -13,11 +16,7 @@ const getInitialRegion = () => {
   };
 };
 
-const MapView = ({
-  coordinates,
-}: {
-  coordinates: { latitude: number; longitude: number }[];
-}) => {
+const MapView = ({ routes }: { routes: any[] }) => {
   const initialRegion = getInitialRegion();
   const [region, setRegion] = useState<Region>(initialRegion);
   const { startLocationSearch, endLocationSearch } = useSearchStore();
@@ -31,6 +30,11 @@ const MapView = ({
   //   });
   // }, [startLocationSearch]);
 
+  const dangerousIntersectionsCoords = useMemo(
+    () => routes.map((route) => route.dangerousIntersectionsCoordinates).flat(),
+    [routes]
+  );
+
   return (
     <RNMMapView
       onRegionChange={(reg) => {
@@ -40,12 +44,19 @@ const MapView = ({
       initialRegion={initialRegion}
       style={{ ...StyleSheet.absoluteFillObject }}
     >
-      <Polyline
-        coordinates={coordinates}
-        strokeColor="#000"
-        strokeColors={["#7F0000"]}
-        strokeWidth={6}
-      />
+      {routes ? (
+        routes.map((route, index) => (
+          <Polyline
+            coordinates={route.coordinates}
+            strokeColor="#000"
+            strokeColors={["#7F0000"]}
+            strokeWidth={6}
+            key={"Route " + index}
+          />
+        ))
+      ) : (
+        <></>
+      )}
       {endLocationSearch && (
         <>
           <Marker
@@ -62,6 +73,23 @@ const MapView = ({
             }}
             pinColor="green"
           />
+
+          {dangerousIntersectionsCoords.map((dangerouseCoord, index) => (
+            <DangerousIntersectionMarker
+              key={`${index}-${dangerouseCoord.latitude}-${dangerouseCoord.longitude}`}
+              latitude={dangerouseCoord.latitude}
+              longitude={dangerouseCoord.longitude}
+            />
+          ))}
+
+          {/* {routes ? (
+            routes.map((route, index) =>
+              route.dangerousIntersectionsCoordinates.map((coord: any) => {
+              })
+            )
+          ) : (
+            <></>
+          )} */}
         </>
       )}
     </RNMMapView>

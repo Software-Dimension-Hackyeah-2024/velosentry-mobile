@@ -8,8 +8,7 @@ import { View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const HomePage = () => {
-  const [coords, setCoords] =
-    useState<{ latitude: number; longitude: number }[]>();
+  const [routes, setRoutes] = useState([]);
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -18,15 +17,14 @@ const HomePage = () => {
 
   const fetchData = async () => {
     if (!startLocationSearch || !endLocationSearch) {
-      setCoords([]);
+      setRoutes([]);
       return;
     }
     const res = await fetch(
       `http://localhost:3000/route?startCoords=${startLocationSearch.lng},${startLocationSearch.lat}&endCoords=${endLocationSearch.lng},${endLocationSearch.lat}`
     );
     const data = await res.json();
-    console.log(data);
-    setCoords(data[0].coordinates);
+    setRoutes(data);
     setDistance(data[0].route.distance);
     setDuration(data[0].route.duration);
   };
@@ -39,7 +37,7 @@ const HomePage = () => {
     <GestureHandlerRootView>
       {isSearchOverlayOpen && <SearchOverlay />}
       <View className="bg-neutral-900 w-screen h-screen items-center">
-        <MapView coordinates={coords ?? []} />
+        <MapView routes={routes} />
         <SearchSection />
         {endLocationSearch && (
           <RouteDetailBottomSheet distance={distance} duration={duration} />
