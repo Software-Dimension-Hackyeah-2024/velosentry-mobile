@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import SearchTextInput from "./SearchTextInput/SearchTextInput";
 import { useSearchStore } from "@/store/searchStorage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { formatTextWithEllipsis } from "@/utils/formatTextWithEllipsis";
 
 const SearchSection = () => {
   const {
@@ -15,16 +16,13 @@ const SearchSection = () => {
   } = useSearchStore();
   return (
     <View className="w-full items-center py-2">
-      {endLocationSearch !== "" && (
+      {endLocationSearch && (
         <SearchTextInput
           onPress={() => {
             setIsSearchOverlayOpen(true);
             setClickedSearchInputVariant("startLocation");
           }}
-          initialValue={startLocationSearch}
-          onInputClear={() => {
-            setStartLocationSearch("");
-          }}
+          initialValue={formatTextWithEllipsis(startLocationSearch.title, 30)}
           leftIcon={
             <MaterialIcons name="location-pin" size={24} color="black" />
           }
@@ -35,10 +33,12 @@ const SearchSection = () => {
           setIsSearchOverlayOpen(true);
           setClickedSearchInputVariant("endLocation");
         }}
-        initialValue={endLocationSearch}
+        initialValue={formatTextWithEllipsis(
+          endLocationSearch?.title ?? "",
+          30
+        )}
         onInputClear={() => {
-          setEndLocationSearch("");
-          setStartLocationSearch("");
+          setEndLocationSearch(undefined);
         }}
       />
     </View>

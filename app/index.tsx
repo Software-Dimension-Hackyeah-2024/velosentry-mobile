@@ -1,16 +1,15 @@
 import MapView from "@/components/MapView";
-import SearchOverlay from "@/components/SearchOverlay";
+import SearchOverlay from "@/components/SearchOverlay/SearchOverlay";
 import SearchSection from "@/components/SearchSection";
-import SearchTextInput from "@/components/SearchTextInput/SearchTextInput";
+import { CURRENT_LOCALIZATION } from "@/consts/currentLocalization";
 import { useSearchStore } from "@/store/searchStorage";
-import Feather from "@expo/vector-icons/Feather";
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { PermissionsAndroid, View } from "react-native";
 
 const HomePage = () => {
   const [coords, setCoords] =
     useState<{ latitude: number; longitude: number }[]>();
-  const { isSearchOverlayOpen } = useSearchStore();
+  const { isSearchOverlayOpen, setStartLocationSearch } = useSearchStore();
 
   const fetchData = async () => {
     const res = await fetch("http://localhost:3000/");

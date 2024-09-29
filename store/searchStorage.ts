@@ -1,14 +1,16 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { storage } from "./storage";
+import { SuggestionRowProps } from "@/components/SearchOverlay/SuggestionRow";
+import { CURRENT_LOCALIZATION } from "@/consts/currentLocalization";
 
 type SearchInputVariants = "startLocation" | "endLocation" | undefined;
 
 export interface SearchState {
-  startLocationSearch: string;
-  setStartLocationSearch: (value: string) => void;
-  endLocationSearch: string;
-  setEndLocationSearch: (value: string) => void;
+  startLocationSearch: SuggestionRowProps;
+  setStartLocationSearch: (value: SuggestionRowProps) => void;
+  endLocationSearch?: SuggestionRowProps;
+  setEndLocationSearch: (value?: SuggestionRowProps) => void;
   isSearchOverlayOpen: boolean;
   setIsSearchOverlayOpen: (value: boolean) => void;
   clickedSearchInputVariant: SearchInputVariants;
@@ -18,8 +20,8 @@ export interface SearchState {
 export const useSearchStore = create<SearchState>()(
   persist(
     (set, get) => ({
-      startLocationSearch: "",
-      endLocationSearch: "",
+      startLocationSearch: CURRENT_LOCALIZATION,
+      endLocationSearch: undefined,
       setStartLocationSearch: (value) => set({ startLocationSearch: value }),
       setEndLocationSearch: (value) => set({ endLocationSearch: value }),
       isSearchOverlayOpen: false,
