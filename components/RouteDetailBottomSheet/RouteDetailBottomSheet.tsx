@@ -14,11 +14,6 @@ const RouteDetailBottomSheet = () => {
   // variables
   const snapPoints = useMemo(() => [100, "25%", "65%"], []);
 
-  // callbacks
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
-
   useEffect(() => {
     bottomSheetModalRef.current?.present();
   }, []);
@@ -30,7 +25,6 @@ const RouteDetailBottomSheet = () => {
         ref={bottomSheetModalRef}
         index={0}
         snapPoints={snapPoints}
-        onChange={handleSheetChanges}
         enablePanDownToClose={false}
       >
         <BottomSheetView className="flex-1 items-center">

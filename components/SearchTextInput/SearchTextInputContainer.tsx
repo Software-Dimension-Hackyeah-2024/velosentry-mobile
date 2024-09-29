@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from "react";
 import { TouchableOpacity, View } from "react-native";
 
 interface SearchTextInputContainerProps extends PropsWithChildren {
-    onPress?: () => void;
+  onPress?: () => void;
 }
 
 const SearchTextInputContainer = ({
@@ -11,13 +11,13 @@ const SearchTextInputContainer = ({
 }: SearchTextInputContainerProps) => {
   if (!onPress)
     return (
-      <View className="w-[90%] flex-row bg-white rounded-xl py-2 items-center my-1 h-14 border-2 border-neutral-200">
+      <View className="flex-row bg-white rounded-3xl py-2 px-1 items-center my-1 h-14 border-2 border-neutral-200 mx-5">
         {children}
       </View>
     );
   return (
     <TouchableOpacity
-      className="w-[90%] flex-row bg-white rounded-xl py-2 items-center my-1 h-14 border-2 border-neutral-200"
+      className="flex-row bg-white rounded-3xl py-2 px-1 items-center my-1 h-14 border-2 border-neutral-200 mx-5"
       onPress={onPress}
     >
       {children}

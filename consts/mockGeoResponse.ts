@@ -119,8 +119,8 @@ export const MOCK_GEO_RESPONSE = {
       confidence: 4,
       formatted: "Kolonia, Nadrenia Północna-Westfalia, Niemcy",
       geometry: {
-        lat: -23.5370962,
-        lng: -46.8359735,
+        lat: 50.053232,
+        lng: 19.946603,
       },
     },
     {
@@ -237,8 +237,8 @@ export const MOCK_GEO_RESPONSE = {
       confidence: 8,
       formatted: "Kolonia, FM 96941, United States of America",
       geometry: {
-        lat: 23.5370962,
-        lng: 46.8359735,
+        lat: 50.017661,
+        lng: 19.930645,
       },
     },
   ],

@@ -4,6 +4,7 @@ import SearchTextInput from "./SearchTextInput/SearchTextInput";
 import { useSearchStore } from "@/store/searchStorage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { formatTextWithEllipsis } from "@/utils/formatTextWithEllipsis";
+import { CURRENT_LOCALIZATION } from "@/consts/currentLocalization";
 
 const SearchSection = () => {
   const {
@@ -40,6 +41,7 @@ const SearchSection = () => {
         )}
         onInputClear={() => {
           setEndLocationSearch(undefined);
+          setStartLocationSearch(CURRENT_LOCALIZATION);
         }}
       />
     </View>
