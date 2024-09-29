@@ -1,11 +1,10 @@
 import { CURRENT_LOCALIZATION } from "@/consts/currentLocalization";
 import { useSearchStore } from "@/store/searchStorage";
-import Feather from "@expo/vector-icons/Feather";
 import React, { useEffect, useMemo, useState } from "react";
 import { StyleSheet } from "react-native";
 import RNMMapView, { Marker, Polyline, Region } from "react-native-maps";
-import colors from "tailwindcss/colors";
 import DangerousIntersectionMarker from "./DangerousIntersectionMarker";
+import { getSafetyEvaluationColor } from "@/utils/getSafetyEvaluationColor";
 
 const getInitialRegion = () => {
   return {
@@ -20,15 +19,6 @@ const MapView = ({ routes }: { routes: any[] }) => {
   const initialRegion = getInitialRegion();
   const [region, setRegion] = useState<Region>(initialRegion);
   const { startLocationSearch, endLocationSearch } = useSearchStore();
-
-  // useEffect(() => {
-  //   setRegion({
-  //     latitude: startLocationSearch.lat,
-  //     longitude: startLocationSearch.lng,
-  //     latitudeDelta: 0.01,
-  //     longitudeDelta: 0.01,
-  //   });
-  // }, [startLocationSearch]);
 
   const dangerousIntersectionsCoords = useMemo(
     () => routes.map((route) => route.dangerousIntersectionsCoordinates).flat(),
@@ -49,7 +39,7 @@ const MapView = ({ routes }: { routes: any[] }) => {
           <Polyline
             coordinates={route.coordinates}
             strokeColor="#000"
-            strokeColors={["#7F0000"]}
+            strokeColors={[getSafetyEvaluationColor(route.safetyScore)]}
             strokeWidth={6}
             key={"Route " + index}
           />
@@ -81,15 +71,6 @@ const MapView = ({ routes }: { routes: any[] }) => {
               longitude={dangerouseCoord.longitude}
             />
           ))}
-
-          {/* {routes ? (
-            routes.map((route, index) =>
-              route.dangerousIntersectionsCoordinates.map((coord: any) => {
-              })
-            )
-          ) : (
-            <></>
-          )} */}
         </>
       )}
     </RNMMapView>
