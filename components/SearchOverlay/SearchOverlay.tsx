@@ -4,9 +4,8 @@ import SearchTextInput from "../SearchTextInput/SearchTextInput";
 import Feather from "@expo/vector-icons/Feather";
 import { useSearchStore } from "@/store/searchStorage";
 import { geocode } from "opencage-api-client";
+
 import SuggestionRow, { SuggestionRowProps } from "./SuggestionRow";
-import { MOCK_GEO_RESPONSE } from "@/consts/mockGeoResponse";
-import { LocationCategory } from "@/types";
 import { CURRENT_LOCALIZATION } from "@/consts/currentLocalization";
 const API_KEY = "01670b02e6d649b3b68bb955de2b022f";
 
@@ -34,15 +33,15 @@ const SearchOverlay = () => {
   const handleInputChange = async (newValue: string) => {
     if (newValue.length > 2) {
       try {
-        // const response = await geocode({ key: API_KEY, q: newValue });
-        const response = MOCK_GEO_RESPONSE;
+        const response = await geocode({ key: API_KEY, q: newValue });
+        // const response = MOCK_GEO_RESPONSE;
+        if (!response || !response.results) return;
         setSuggestions(
           response?.results.map((result: any) => {
             const lat = result.geometry.lat;
             const lng = result.geometry.lng;
             const title = result.formatted;
             const category = result.components._category;
-            console.log(category);
             return { lat, lng, title, category };
           })
         );

@@ -30,7 +30,7 @@
     "expo-system-ui": "~3.0.7",
     "expo-web-browser": "~13.0.3",
     "nativewind": "2.0.11",
-    "opencage-api-client": "^1.0.7",
+    "opencage-api-client": "iwoplaza/opencage-api-client#6b9776ea9c0cf1c29839d0aeed89da0ae08194d6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.74.5",

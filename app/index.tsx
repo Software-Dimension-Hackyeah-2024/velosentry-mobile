@@ -15,18 +15,22 @@ const HomePage = () => {
     useSearchStore();
 
   const fetchData = async () => {
-    if (!startLocationSearch || !endLocationSearch) return;
+    if (!startLocationSearch || !endLocationSearch) {
+      setCoords([]);
+      return;
+    }
     const res = await fetch(
       `http://localhost:3000/route?startCoords=${startLocationSearch.lng},${startLocationSearch.lat}&endCoords=${endLocationSearch.lng},${endLocationSearch.lat}`
     );
     const data = await res.json();
+    console.log(startLocationSearch, endLocationSearch);
     console.log(data);
-    // setCoords(data[0].coordinates);
+    setCoords(data[0].coordinates);
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [startLocationSearch, endLocationSearch]);
 
   return (
     <GestureHandlerRootView>

@@ -1,12 +1,13 @@
+import { CURRENT_LOCALIZATION } from "@/consts/currentLocalization";
 import { useSearchStore } from "@/store/searchStorage";
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import RNMMapView, { Marker, Polyline, Region } from "react-native-maps";
 
 const getInitialRegion = () => {
   return {
-    latitude: 37.78825,
-    longitude: -122.4324,
+    latitude: CURRENT_LOCALIZATION.lat,
+    longitude: CURRENT_LOCALIZATION.lng,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
@@ -25,17 +26,12 @@ const MapView = ({
       onRegionChange={(reg) => {
         setRegion(reg);
       }}
-      initialRegion={{
-        latitude: 50.177168,
-        longitude: 19.75402,
-        longitudeDelta: 1,
-        latitudeDelta: 1,
-      }}
+      initialRegion={initialRegion}
       style={{ ...StyleSheet.absoluteFillObject }}
     >
       <Polyline
         coordinates={coordinates}
-        strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+        strokeColor="#000"
         strokeColors={["#7F0000"]}
         strokeWidth={6}
       />
